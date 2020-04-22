@@ -1,0 +1,132 @@
+@startuml
+
+class Box {
+    renew : boolen
+    type : int
+    data : array
+    place : array
+    order : array
+    notify()
+    setplace()
+}
+note left : notify(){ Plate.update() }
+Box <|--- Box_0
+Box <|--- Box_1
+Box <|--- Box_2
+Box <|--- Box_3
+Box <|--- Box_4
+Box <|--- Box_5
+Box <|--- Box_6
+class Box_0
+class Box_1
+class Box_2
+class Box_3
+class Box_4
+class Box_5
+class Box_6
+
+class BoxFactory{
+  ans : Box
+  getBoxInstance()
+}
+
+BoxFactory o-- Box
+Box -- Plate : update()
+
+class  Plate{
+    res
+    initPlate()
+    update()
+    check()
+    addBox()
+    eliminate()
+}
+note top : update(){ after check ; Score.update() }
+Plate - Score : update()
+class Score{
+    Score : int
+    update()
+}
+
+note "doCommand()" as n1
+note "keydown" as n2
+n1 -- Invoker
+n2 -- n1
+
+
+class Invoker{
+    command : Command
+    setCommand()
+    do()
+}
+
+Invoker o-- Command
+Command --- Box : notify()
+
+class Command{
+    do()
+}
+class Right
+class Left
+class Down
+class Revolve
+
+class DoRight
+class DoRevolve
+class DoDown
+class DoLeft
+
+Right -- DoRight
+Left -- DoLeft
+Down -- DoDown
+Revolve -- DoRevolve
+
+Command <|-- Right
+Command <|-- Left
+Command <|-- Down
+Command <|-- Revolve
+
+class State
+class New
+class Play
+class Finish
+class Context
+
+State <|--  New
+State <|-- Play
+State <|-- Finish
+Context o-- State
+
+class Context {
+    State state
+    setState(state)
+    start()
+    game()
+    stop()
+    show()
+}
+
+class State {
+string stateName
+constructor()
+}
+
+class New {
+    stateName = '新建'
+    start()
+}
+
+class Play {
+    stateName = '游戏'
+    Box box
+    game()
+    stop()
+}
+
+class Finish {
+    stateName = '结束'
+    showHistory()
+    renew()
+}
+State -- n2
+@enduml

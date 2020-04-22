@@ -1,0 +1,44 @@
+@startuml
+scale 350 width
+[*] --> New
+
+New --> Play : click start button
+state New {
+  [*] --> newPlateInstance
+  newPlateInstance -> initPlate
+  initPlate -> drawPlate
+
+  drawPlate -> getScoreInstance
+  getScoreInstance -> initScore
+  initScore : score = 0
+}
+New : stateName = '新建'
+state Play {
+  [*] -> getBoxInstance
+  getBoxInstance -> Box_Failing : draw
+  Box_Failing -> Box_Failing : regular fail
+  Box_Failing -> changeShape : listen keydown event
+  changeShape ->Box_Failing
+  changeShape : revolve / right / left
+  getBoxInstance : 7 types
+  Box_Failing : in canvas plate
+  Box_Failing --> Box_Land
+  Box_Land --> NewScore : eliminate line
+  NewScore : score ++
+  NewScore -> NewPlate : update plate
+  Box_Land --> NewPlate
+  NewPlate : update Plate with new box
+  NewPlate ----> getBoxInstance
+  NewPlate --> Finish : plate full
+}
+Play : stateName = '游戏'
+Finish : stateName = '结束'
+Finish -up->New : click replay button
+state Finish {
+    [*] -> HistoryPage_Null: Redirected
+    HistoryPage_Null : with empty table
+    HistoryPage_Null -> NewHistoryPage : update game record
+    NewHistoryPage : show date and score
+}
+Finish --> [*]
+@enduml

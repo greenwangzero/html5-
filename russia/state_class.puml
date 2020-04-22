@@ -1,0 +1,45 @@
+@startuml
+class State
+class New
+class Play
+class Finish
+class Context
+
+State <|--  New
+State <|-- Play
+State <|-- Finish
+Context o-- State
+
+class Context {
+    State state
+    setState(state)
+    start()
+    game()
+    stop()
+    show()
+}
+
+class State {
+string stateName
+constructor()
+}
+
+class New {
+    stateName = '新建'
+    start()
+}
+
+class Play {
+    stateName = '游戏'
+    Box box
+    game()
+    stop()
+}
+
+class Finish {
+    stateName = '结束'
+    showHistory()
+    renew()
+}
+
+@enduml

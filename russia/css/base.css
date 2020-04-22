@@ -1,0 +1,26 @@
+
+
+.btn {
+    border: none;
+    color: white;
+    overflow: hidden;
+    margin: 1rem;
+    padding: 0;
+    text-transform: uppercase;
+    width: 150px;
+    height: 40px;
+}
+.btn-round {
+    border-radius: 10em;
+}
+.btn.color-1 {
+    background-color: rgba(48, 47, 45, 0.7);
+}
+.material-design {
+    position: relative;
+}
+.btn-border.color-1 {
+    background-color: transparent;
+    border: 2px solid gray;
+    color: gray;
+}
