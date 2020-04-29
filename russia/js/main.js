@@ -14,6 +14,6 @@ window.onload = function () {
     document.getElementById('score').append(score.score);
     document.getElementById('speed').append(speed);
     bt_start.onclick = function () {
-        context.lay();
+        context.toPlay();
     }
 }

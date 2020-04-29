@@ -31,7 +31,7 @@ class  Plate {
                 //判断游戏失败:添加的方块在面板外
                 console.log('error');
                 //clearInterval(context.state.t);
-                context.finish();
+                context.toFinish();
             }
         }
     }

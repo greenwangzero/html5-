@@ -1,4 +1,13 @@
-
+html {
+    font-size: 1em;
+}
+body {
+    font: 1em 'Source Sans Pro';
+    margin: 0;
+    /*background: #fff;*/
+    background-size: cover;
+    /*color: #000;*/
+}
 
 .btn {
     border: none;
@@ -23,4 +32,20 @@
     background-color: transparent;
     border: 2px solid gray;
     color: gray;
+}
+#content {
+    display: table;
+    margin: auto;
+    /*background: rgba(0,0,0,0.7);*/
+}
+#right {
+    padding: 0 0.5em;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+#center {
+    border: 1px solid #000000;
+    position: relative;
+    float: left;
 }

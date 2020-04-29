@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>俄罗斯方块</title>
@@ -16,15 +16,25 @@
 
 </head>
 <body>
-<div class="score" id = "score">成绩：</div>
-<div class="speed" id = "speed">speed:</div>
-<div style="position: absolute">
-    <canvas id="keybox" width="400" height="400"  style="position: absolute; "></canvas>
-    <canvas id="remain" width="400" height="400"  style="position: absolute; "></canvas>
-    <canvas id="canvas" width="400" height="400" style="position: absolute; "></canvas>
-    <button id="start" class="btn btn-round btn-border color-1 material-design" data-color='gray' style="margin:50px; top: 250px">START
-</button>
-
+<div id="content">
+    <div id="center">
+        <!--style="position: absolute"-->
+        <canvas id="keybox" width="400" height="400"  style="position: absolute; "></canvas>
+        <canvas id="remain" width="400" height="400"  style="position: absolute; "></canvas>
+        <canvas id="canvas" width="400" height="600" />
+                <!--style="position: absolute">-->
+        <button
+            id="start"
+            class="btn btn-round btn-border color-1 material-design"
+            data-color='gray' style="margin:50px; top: 250px">START
+        </button>
+    </div>
+    <div id="right">
+        <h3>Next</h3>
+        <canvas id=preview></canvas>
+        <div class="score" id = "score">成绩：</div>
+        <div class="speed" id = "speed">speed:</div>
+    </div>
 </div>
 </body>
 </html>
