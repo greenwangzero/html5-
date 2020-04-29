@@ -12,7 +12,8 @@ window.onload = function () {
     context = new Context();
     var bt_start = document.getElementById('start');
     document.getElementById('score').append(score.score);
+    document.getElementById('speed').append(speed);
     bt_start.onclick = function () {
-        context.start();
+        context.lay();
     }
 }

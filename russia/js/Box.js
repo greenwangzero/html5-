@@ -1,14 +1,14 @@
 function  getplace (box) {
     //console.log(box);
-    var n=0;
-    for (var i=0;i<box.data.length;i++){
-        for (var j=0;j<box.data.length;j++) {
+    let n=0;
+    for (let i=0;i<box.data.length;i++){
+        for (let j=0;j<box.data.length;j++) {
             if(box.data[i][j]){
-
-                box.place[n++]+=i-2;
+                //初始化方块位置
+                box.place[n++]+=i-2; //从-2开始显示
                 box.place[n]+=width/30;
                 box.place[n++]+=j;
-                box.order.push(  i*10+j );
+                box.order.push( i*10+j );
             }
         }
     }
@@ -19,14 +19,14 @@ function  getplace (box) {
 //         place[i+1]+=sy/10;
 //     }
 // }
-function checkPlate(box) {//检查box与plate是否相碰
-    for(let i=0;i<box.place.length;i+=2){
-        var x = box.place[i];
-        var y = box.place[i+1]!= 0 ? box.place[i+1]: 0;
-        if(plate.res[y][x])return true
-    }
-    return false;
-}
+// function checkPlate(box) {//检查box与plate是否相碰
+//     for(let i=0;i<box.place.length;i+=2){
+//         var x = box.place[i];
+//         var y = box.place[i+1]!= 0 ? box.place[i+1]: 0;
+//         if(plate.res[y][x])return true
+//     }
+//     return false;
+// }
 class Box {
     constructor() {
         this.renew = true;
@@ -37,6 +37,7 @@ class Box {
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ];
+        //记录每个方块的绝对位置(x,y)
         this.place = [0,0,0,0,0,0,0,0];
         // initplace(this.place);
         this.order = [];
@@ -46,14 +47,6 @@ class Box {
     }
     setplace(i,key) {
         this.place[i]+=key;
-        if(i%2==1){//奇数
-            // if(this.place[i]*size === height){//底部
-            //     this.notify();
-            // }
-        }
-        // else if(checkPlate(this)){//与plate相碰
-        //     this.notify();
-        // }
     }
 }
 class  Box_1 extends Box{
@@ -135,13 +128,11 @@ class  Box_0 extends Box{
     }
 }
 class BoxFactory{
-    constructor(){
-
-    }
+    constructor(){}
     getBoxInstance(){
         this.type = parseInt(Math.random()*7);
         //this.type = 1;
-        var ans ;
+        let ans ;
         switch (this.type) {
             case 0:
                 ans = new Box_0();

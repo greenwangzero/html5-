@@ -1,7 +1,7 @@
 class  Plate {
     constructor(){
         draw_plate();
-         this.res = new Array();
+        this.res = new Array();
         this.initPlate();
 
     }
@@ -24,13 +24,14 @@ class  Plate {
         for(let i=0;i<box.place.length;i+=2){
             var x = box.place[i];
             var y = box.place[i+1]!== 0 ? box.place[i+1]: 0;
-            if(x>=0&&plate.res[x][y]===0){
+            if(x>=0 && plate.res[x][y]===0){
                 plate.res[x][y]=1;
             }
-            else {
+            else if(x<0){
+                //判断游戏失败:添加的方块在面板外
                 console.log('error');
-                clearInterval(context.state.t);
-                context.stop();
+                //clearInterval(context.state.t);
+                context.finish();
             }
         }
     }

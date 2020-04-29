@@ -31,13 +31,22 @@ function check_move(box,type){
     // 0 revolve
     // 2 down
     if (type == -1){
-        for (let i=1; i< box.place.length;i+=2) {
-           if(box.place[i]-1<0) return false;
+        //检查和面板&方块相碰
+        for (let i=0; i< box.place.length;i+=2) {
+            let x = box.place[i];
+            let y = box.place[i+1]-1;
+            //防止越界上面板
+            let plateFlag = x<0 ? 0:plate.res[x][y];
+            if(y<0 || plateFlag) return false;
         }
     }
     else if(type == 1){
-        for (let i=1; i< box.place.length;i+=2) {
-            if(box.place[i]+1>= width/10) return false;
+        for (let i=0; i< box.place.length;i+=2) {
+            let x = box.place[i];
+            let y = box.place[i+1]+1;
+            //防止越界上面板
+            let plateFlag = x<0 ? 0:plate.res[x][y];
+            if(y>= width/10 || plateFlag) return false;
         }
     }
     else if(type == 0) {
@@ -48,41 +57,50 @@ function check_move(box,type){
             let i = (key-j)/10;
             // console.log(i+" "+j);
             if(box.data[i][j]){
-                    this.x1 = -(j - 2) + 2;
-                    this.y1 = (i - 2) + 2;
-                    this.x2 = -(j + 1 - 2) + 2;
-                    this.y2 = (i + 1 - 2) + 2;
-                    this.x = Math.min(this.x1, this.x2);
-                    this.y = Math.min(this.y1, this.y2);
-                    // box.data[i][j] = 0;
-                    // box.data[this.x][this.y] = 1;
-                    //place
-                    if (box.place[k] + this.x - i < 0 || box.place[k] + this.x - i >= height/10) return false;
-                    if (box.place[k + 1] + this.y - j < 0 || box.place[k + 1] + this.y - j >= width/10) return false;
-                    k += 2;
-                }
+                this.x1 = -(j - 2) + 2;
+                this.y1 = (i - 2) + 2;
+                this.x2 = -(j + 1 - 2) + 2;
+                this.y2 = (i + 1 - 2) + 2;
+                this.x = Math.min(this.x1, this.x2);
+                this.y = Math.min(this.y1, this.y2);
+                // box.data[i][j] = 0;
+                // box.data[this.x][this.y] = 1;
+
+                //旋转后的方块不越界面板
+                if (box.place[k] + this.x - i < 0 || box.place[k] + this.x - i >= height/10) return false;
+                if (box.place[k + 1] + this.y - j < 0 || box.place[k + 1] + this.y - j >= width/10) return false;
+
+                //旋转后的方块不与面板方块冲突
+                let xx = box.place[k] + this.x - i;
+                let yy = box.place[k + 1] + this.y - j;
+                if(plate.res[xx][yy]) return false;
+
+                k += 2;
+            }
 
         }
     }
     else if(type  == 2){
-        for (let i=0; i< box.place.length;i+=2) {
-            if(box.place[i]+1>= height/10) {
-                box.notify();
-                return false;
-            }
-        }
-      //检查box与plate是否相碰
+        //检查box沉底
+        // for (let i=0; i< box.place.length;i+=2) {
+        //     if(box.place[i]+1>= height/10) {
+        //         box.notify();
+        //         return false;
+        //     }
+        // }
+        //检查box沉底
         for(let i=0;i<box.place.length;i+=2){
-            var x = box.place[i]+1;
-            var y = box.place[i+1]!= 0 ? box.place[i+1]: 0;
+            let x = box.place[i]+1 != 0 ? box.place[i]+1 : 0;
+            let y = box.place[i+1];
             try{
-                if(plate.res[x][y]) {
+                //与方块相碰&面板底部
+                if( x>=height/10 || plate.res[x][y]) {
                     box.notify();
                     return false;
                 }
             }
             catch (e) {
-                console.log(plate.res);
+                console.log("error :"+e.toString()+plate.res);
                 console.log(x +"+" +y);
             }
         }
@@ -97,7 +115,8 @@ class  Left {
     do(box){
        return  this.doLeft .do(box);
     }
-}class  Right {
+}
+class  Right {
     constructor(){
         this.doRight = new DoRight();
     }
@@ -161,29 +180,29 @@ class  DoRevolve {
                 let j = key%10;
                 let i = (key-j)/10;
                 // console.log(i+" "+j);
-                    if(box.data[i][j]){
-                        this.x1 =  -(j-2)+2;
-                        this.y1 =  (i-2)+2;
-                        this.x2 =  -(j+1-2)+2;
-                        this.y2 =  (i+1-2)+2;
-                        this.x= Math.min(this.x1,this.x2);
-                        this.y= Math.min(this.y1,this.y2);
-                        box.data[i][j]=0;
-                        que.enqueue(this.x);
-                        que.enqueue(this.y);
+                if(box.data[i][j]){
+                    this.x1 =  -(j-2)+2;
+                    this.y1 =  (i-2)+2;
+                    this.x2 =  -(j+1-2)+2;
+                    this.y2 =  (i+1-2)+2;
+                    this.x= Math.min(this.x1,this.x2);
+                    this.y= Math.min(this.y1,this.y2);
+                    box.data[i][j]=0;
+                    que.enqueue(this.x);
+                    que.enqueue(this.y);
 
-                        box.order[p]=this.x*10+this.y;
-                        // box.place[k] += this.x- i;
-                        box.setplace(k,this.x- i)
-                        // box.place[k+1] += this.y- j;
-                        box.setplace(k+1,this.y-j);
-                        k += 2;
-                    }
+                    box.order[p]=this.x*10+this.y;
+                    // box.place[k] += this.x- i;
+                    box.setplace(k,this.x- i)
+                    // box.place[k+1] += this.y- j;
+                    box.setplace(k+1,this.y-j);
+                    k += 2;
+                }
             }
             var size = que.size();
             for(let i= 0; i<size;i+=2){
-                var x=que.dequeue();
-                var y=que.dequeue();
+                let x=que.dequeue();
+                let y=que.dequeue();
                 que.print();
                 box.data[x][y]=1;
             }
