@@ -13,8 +13,9 @@ class Score {
     update_speed(){
         if(this.score%2 == 0){
             speed -= 50;
+            speedLevel++;
             if(speed<100) speed=100;
-            document.getElementById('speed').innerHTML ='speed：'+speed;
+            document.getElementById('speed').innerHTML ='speed：'+speedLevel;
         }
     }
 }
