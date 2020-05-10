@@ -13,6 +13,9 @@ function Queue() {
     this.front = function () {
         return items[0]
     }
+	this.second = function() {
+		return item[1]
+	}
     this.isEmpty = function () {
         return items.length === 0
     }

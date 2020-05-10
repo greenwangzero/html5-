@@ -7,11 +7,15 @@ var speedLevel = 1;
 var plate;
 const size = 10;
 var queue= new Queue();
+var nextBox = new Queue();
 var context;
 var score;
+var audioElement ;
 window.onload = function () {
 
     var bt_start = document.getElementById('start');
+    audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', '../source/eliminate.mp3');
     //sx = document.getElementById('center').getBoundingClientRect().left;
     //sy = document.getElementById('center').getBoundingClientRect().top;
     context = new Context();

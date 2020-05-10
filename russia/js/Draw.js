@@ -54,3 +54,18 @@ function update_plate() {
         }
     }
 }
+function update_next(next){
+    let c  = document.getElementById("next");
+    let cxt = c.getContext("2d");
+    c.height = c.height;
+    for(let i=0;i<4;i++){
+        for (let j=0;j<4;j++){
+            if(next.data[i][j]){
+                let x = j*size+sx;
+                let y = i*size+sy;
+                cxt.fillStyle = 'pink';
+                cxt.fillRect(x,y,size,size);
+            }
+        }
+    }
+}

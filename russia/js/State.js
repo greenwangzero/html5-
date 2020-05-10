@@ -51,7 +51,9 @@ class Play extends State{
          this.t= setInterval(function () {
             if(  this.box == null || this.box.renew == true ){
                 queue.clean();
-                this.box = new BoxFactory().getBoxInstance();
+                let boxFactory = new BoxFactory();
+                this.box = boxFactory.getBox();
+                update_next(boxFactory.getNextBox());
                 this.box.renew = false;
             }
             draw_work(this.box);

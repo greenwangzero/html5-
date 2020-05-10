@@ -129,11 +129,24 @@ class  Box_0 extends Box{
 }
 class BoxFactory{
     constructor(){}
-    getBoxInstance(){
-        this.type = parseInt(Math.random()*7);
-        //this.type = 1;
+    getNextBox(){
+        while(nextBox.size()<2){
+            nextBox.enqueue(parseInt(Math.random()*7));
+        }
+        let type = nextBox.front();
+        return this.getBoxInstance(type);
+    }
+    getBox(){
+        while(nextBox.size()<2){
+            nextBox.enqueue(parseInt(Math.random()*7));
+        }
+        let type = nextBox.front();
+        nextBox.dequeue();
+        return this.getBoxInstance(type);
+    }
+    getBoxInstance(type){
         let ans ;
-        switch (this.type) {
+        switch (type) {
             case 0:
                 ans = new Box_0();
                 break;
@@ -158,11 +171,7 @@ class BoxFactory{
             default:
                 ans = new Box_1();
         }
-        // this.Boxtype = 'Box_' + this.type ;
-        // console.log('box_'+this.type);
-        // var ans = new Box_0;
-        // //var ans = new $(this.Boxtype);
-        console.log(this.type);
+        console.log(type);
         return ans;
     }
 }

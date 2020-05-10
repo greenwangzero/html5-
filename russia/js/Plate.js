@@ -44,11 +44,11 @@ class  Plate {
             }
         }
         update_plate();
-        // box = undefined;
         box.renew= true;
     }
     eliminate(i){
         this.res.splice(i,this.res[0].length);
         this.res.splice(0,0,[]);
+        audioElement.play();
     }
 }
